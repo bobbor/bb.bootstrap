@@ -8,11 +8,19 @@
 // [`binder`](binder.html)
 /*jshint browser:true */
 /*globals define */
-define([
-    'backbone', 'underscore', 'dom', 'binder'
-], function(Backbone, _, $, binder) {
+(function(root, factory) {
+    if(define !== undefined && define.amd) {
+        define(['backbone', 'underscore', 'dom', 'binder'], function() {
+           return factory.apply(root, arguments);
+        });
+    } else {
+        window.BB = factory(window.Backbone, window._, window.DOM, window.binder);
+        window.DOM.ready(function() {
+            BB.bootstrap(document);
+        });
+    }
+}(this, function(Backbone, _, $, binder) {
     'use strict';
-
     var definedViews = {};
     var definedModels = {
         'default' : Backbone.Model
@@ -61,17 +69,17 @@ define([
             return propMap;
         }, {});
     }
-    // finds all targets in the specified context (`declaration`)
-    // and on the declaration itself
-    function getTargets(declaration) {
+    // finds all targets in the specified context (`element`)
+    // and on the element itself
+    function getTargets(element) {
         var ret = [];
-        var targets = declaration.all('[data-bb-target]');
+        var targets = element.all('[data-bb-target]');
         targets.forEach(function(target) {
             var val = target.data('bb-target');
             ret.push(val.substring(1, val.length));
         });
-        if (declaration.data('bb-target')) {
-            var val = declaration.data('bb-target');
+        if (element.data('bb-target')) {
+            var val = element.data('bb-target');
             ret.push(val.substring(1, val.length));
         }
         return _.uniq(ret);
@@ -154,4 +162,4 @@ define([
             definedModels[name] = definition;
         }
     };
-});
+}));
