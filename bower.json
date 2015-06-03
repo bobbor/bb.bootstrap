@@ -1,0 +1,29 @@
+{
+  "name": "bb.bootstrap",
+  "main": "bb.bootstrap.js",
+  "version": "1.0.0",
+  "authors": [
+    "Philipp Paul <me@philipp-paul.com>"
+  ],
+  "description": "bootstrapping backbone views, which have been defined via html-attributes",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "backbone",
+    "bootstrapping"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.0",
+    "underscore": "~1.8.3"
+  }
+}
