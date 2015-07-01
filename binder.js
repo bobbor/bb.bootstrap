@@ -10,7 +10,7 @@
 // ## usage
 // #### HTML
 // ```html
-// <div class="foo" data-mcp-target="=bar">baz</div>
+// <div class="foo" data-bb-target="=bar">baz</div>
 // ```
 // #### JS
 // ```javascript
@@ -19,7 +19,7 @@
 // ```
 // #### result in HTML
 // ```html
-// <div class="foo" data-mcp-target="=bar">someval</div>
+// <div class="foo" data-bb-target="=bar">someval</div>
 // ```
 // so simply setting a value on the model causes the corresponding dom to update,
 // which removes unnecessary code in the view, that does nothing more than simply setting
@@ -29,7 +29,7 @@
 /*jshint browser:true */
 /*globals define */
 (function(root, factory) {
-    if(define !== undefined && define.amd) {
+    if(window.define !== undefined && define.amd) {
         define(['dom', 'underscore'], function() {
             return factory.apply(root, arguments);
         });
@@ -65,7 +65,7 @@
             // this collects all elements matching `sel` on the context
             var els = slice.call(ctx.querySelectorAll(sel));
             // only add it to the `inputs` if the el has the correct attribute
-            if (ctx.hasAttribute('data-mcp-source')) {
+            if (ctx.hasAttribute('data-bb-source')) {
                 els.push(ctx);
             }
             // uniqify the inputs, so we have no doubled elements.
@@ -73,17 +73,17 @@
             il = inputs.length;
             return els;
         }
-
+        
         function newInput(_name) {
-            return rakeInputs(_name, '[data-mcp-source="' + _name + '"]');
+            return rakeInputs(_name, '[data-bb-source="' + _name + '"]');
         }
 
         function rakeTargets(_name, sel) {
             // this collects all elements matching `sel` on the context
             var els = slice.call(ctx.querySelectorAll(sel));
             // only add them to the collection if they match the conditions
-            if (ctx.hasAttribute('data-mcp-target') &&
-                (new RegExp(_name + '$', 'g')).test(ctx.getAttribute('data-mcp-target'))) {
+            if (ctx.hasAttribute('data-bb-target') &&
+                (new RegExp(_name + '$', 'g')).test(ctx.getAttribute('data-bb-target'))) {
                 els.push(ctx);
             }
             // unigify the targets, so we have no double setting
@@ -93,13 +93,13 @@
         }
 
         function newTarget(_name) {
-            return rakeTargets(_name, '[data-mcp-target$="' + _name + '"]');
+            return rakeTargets(_name, '[data-bb-target$="' + _name + '"]');
         }
 
         // change a specific element according to its own definition
         function change(el) {
             var $el = $.one(el);
-            var attr = $el.data('mcp-target');
+            var attr = $el.data('bb-target');
             var char = attr.charAt(0);
 
             switch (char) {

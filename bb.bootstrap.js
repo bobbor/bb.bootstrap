@@ -9,13 +9,13 @@
 /*jshint browser:true */
 /*globals define */
 (function(root, factory) {
-    if(define !== undefined && define.amd) {
+    if(window.define !== undefined && define.amd) {
         define(['backbone', 'underscore', 'dom', 'binder'], function() {
            return factory.apply(root, arguments);
         });
     } else {
         window.BB = factory(window.Backbone, window._, window.DOM, window.binder);
-        window.DOM.ready(function() {
+        window.DOM.ready(function(e) {
             BB.bootstrap(document);
         });
     }
